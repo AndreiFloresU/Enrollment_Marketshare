@@ -5,13 +5,26 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide")
 
 # Cargar los datos
-df = pd.read_excel("./files/base_universidades.xlsx")
+df = pd.read_excel("./files/base_universidades2.xlsx")
 
 # Título de la aplicación
 st.title("MARKETSHARE")
 
 # Filtros en la barra lateral
 st.sidebar.header("Filtros")
+
+# Filtro de Año
+anio = st.sidebar.multiselect(
+    "Año:",
+    options=sorted(df["AÑO"].unique()),
+    default=sorted(df["AÑO"].unique()),
+    help="Selecciona uno o más años",
+)
+
+filtered_df = df.copy()
+
+if anio:
+    filtered_df = filtered_df[filtered_df["AÑO"].isin(anio)]
 
 # Filtro de Región
 region = st.sidebar.multiselect(
@@ -20,8 +33,6 @@ region = st.sidebar.multiselect(
     default=None,
     help="Selecciona una o más regiones",
 )
-
-filtered_df = df.copy()
 
 if region:
     filtered_df = filtered_df[filtered_df["REGION"].isin(region)]
@@ -130,6 +141,7 @@ for i, año in enumerate(años):
             name=f"Año {año}",
             text=df_year["PARTICIPACION"].apply(lambda x: f"{x:.2%}"),
             textposition="auto",
+            textfont=dict(color="white"),
         )
     )
 

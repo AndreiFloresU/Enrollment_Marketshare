@@ -4,9 +4,6 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
-# Configuración de la página
-st.set_page_config(page_title="Crecimiento Enrollment", layout="wide")
-
 # Título de la aplicación
 st.title("Tasas de crecimiento matriculas e ingresos")
 
