@@ -23,7 +23,7 @@ def generar_grises(num_colores, inicio=211, fin=0):
 st.set_page_config(layout="wide")
 
 # Título de la aplicación
-st.title("Tendencias de matriculas e ingresos")
+st.title("Tendencias de matriculaaas e ingresos")
 
 
 # Cargar los datos desde el archivo Excel
