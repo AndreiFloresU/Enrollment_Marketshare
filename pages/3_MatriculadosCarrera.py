@@ -5,6 +5,9 @@ import plotly.graph_objects as go
 # --- Lectura de datos ---
 df = pd.read_excel("./files/baseMarketShare.xlsx")
 
+# --- Filtrar para excluir "CUARTO NIVEL" ---
+df = df[df["NIVEL"] != "CUARTO NIVEL"]
+
 # --- Widgets de filtro ---
 st.title("Matriculados y Número de Instituciones por Carrera")
 anios_seleccionados = st.multiselect(
@@ -12,8 +15,14 @@ anios_seleccionados = st.multiselect(
     options=sorted(df["AÑO"].unique()),
     default=sorted(df["AÑO"].unique()),
 )
+
+# FILTRO FACULTAD
+facultad_seleccionada = st.selectbox("Elige una facultad:", options=sorted(df["FACULTAD"].unique()))
+
+# FILTRO CARRERA
+carreras_filtradas = df[df["FACULTAD"] == facultad_seleccionada]["CARRERA"].unique()
 carrera_seleccionada = st.selectbox(
-    "Elige una carrera:", options=sorted(df["CARRERA"].unique())
+    "Elige una carrera:", options=sorted(carreras_filtradas)
 )
 
 # --- Filtrar DataFrame ---
