@@ -43,7 +43,7 @@ def cargar_datos(ruta_archivo):
 
 
 # Ruta del archivo Excel
-ruta_excel = "./files/base_enrollment.xlsx"
+ruta_excel = "./files/baseEnrollment.xlsx"
 
 # Cargar los datos
 df = cargar_datos(ruta_excel)

@@ -17,7 +17,7 @@ menu = [
 choice = st.sidebar.selectbox("Menú", menu)
 
 # Ruta del archivo Excel
-excel_file = "files/base_enrollment.xlsx"
+excel_file = "files/baseEnrollment.xlsx"
 
 
 def aplicar_escala_tres_colores(df, columnas_porcentuales, centro=50):
