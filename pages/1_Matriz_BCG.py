@@ -121,7 +121,7 @@ if not df_filtrado.empty:
     color_vino = "#800020"  # Código hexadecimal para un color vino oscuro
 
     # Generar colores en escala de grises para los demás semestres
-    semestres_grises = [s for s in semestres_unicos if s != "202510"]
+    semestres_grises = [s for s in semestres_unicos if s != "202520"]
     num_grises = len(semestres_grises)
 
     if num_grises > 0:
@@ -134,7 +134,7 @@ if not df_filtrado.empty:
     # Crear el mapa de colores
     colores_semestre = {}
     for i, semestre in enumerate(semestres_unicos):
-        if semestre == "202510":
+        if semestre == "202520":
             colores_semestre[semestre] = color_vino
         else:
             colores_semestre[semestre] = grises[i] if i < num_grises else "#808080"
