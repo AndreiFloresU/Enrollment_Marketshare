@@ -78,7 +78,7 @@ def cargar_tabla_desde_rango(columnas, fila_inicio, num_filas, columnas_porcentu
 
 # Definir columnas porcentuales para cada semestre
 columnas_porcentuales_sem10 = ["202210", "202310", "202410", "202510"]
-columnas_porcentuales_sem20 = ["202220", "202320", "202420"]
+columnas_porcentuales_sem20 = ["202220", "202320", "202420", "202520"]
 
 # =============================================================================
 # 2. Lógica según la elección del usuario
@@ -116,7 +116,7 @@ if choice == "Crecimiento de los periodos 10":
 
 
 elif choice == "Crecimiento de los periodos 20":
-    columnas_semestre_20 = "R:W"
+    columnas_semestre_20 = "R:X"
     fila_inicio_semestre_20 = 1
     num_filas_semestre_20 = 74
     semestre_20 = cargar_tabla_desde_rango(
