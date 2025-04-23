@@ -26,8 +26,10 @@ facultades_seleccionadas = st.multiselect(
 
 # FILTRO CARRERA
 carreras_filtradas = df[df["FACULTAD"].isin(facultades_seleccionadas)]["CARRERA"].unique()
-carrera_seleccionada = st.selectbox(
-    "Elige una carrera:", options=sorted(carreras_filtradas)
+carreras_seleccionadas = st.multiselect(
+    "Elige una o varias carreras:",
+    options=sorted(carreras_filtradas),
+    default=[sorted(carreras_filtradas)[0]]
 )
 
 
@@ -35,8 +37,9 @@ carrera_seleccionada = st.selectbox(
 df_filt = df[
     (df["AÑO"].isin(anios_seleccionados)) &
     (df["FACULTAD"].isin(facultades_seleccionadas)) &
-    (df["CARRERA"] == carrera_seleccionada)
+    (df["CARRERA"].isin(carreras_seleccionadas))
 ].copy()
+
 
 if df_filt.empty:
     st.warning("No hay datos para la selección actual.")
