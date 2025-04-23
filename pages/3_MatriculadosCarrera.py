@@ -5,39 +5,52 @@ import plotly.graph_objects as go
 # --- Lectura de datos ---
 df = pd.read_excel("./files/baseMarketShare2.xlsx")
 
-# --- Filtrar para excluir "CUARTO NIVEL" ---
-df = df[df["NIVEL"] != "CUARTO NIVEL"]
-
-# --- Widgets de filtro ---
 st.title("Matriculados y Número de Instituciones por Carrera")
+
+# --- Filtro NIVEL ---
+niveles_disponibles = sorted(df["NIVEL"].unique())
+niveles_seleccionados = st.multiselect(
+    "Elige uno o varios niveles:",
+    options=niveles_disponibles,
+    default=niveles_disponibles,
+)
+
+# Aplicar filtro por nivel
+df = df[df["NIVEL"].isin(niveles_seleccionados)]
+
+# --- Filtro AÑO ---
 anios_seleccionados = st.multiselect(
     "Elige uno o varios años:",
     options=sorted(df["AÑO"].unique()),
     default=sorted(df["AÑO"].unique()),
 )
 
-# FILTRO FACULTAD
+# --- Filtro FACULTAD ---
+
+facultades_validas = sorted([f for f in df["FACULTAD"].unique() if isinstance(f, str) and f.strip() != ""])
+
 facultades_seleccionadas = st.multiselect(
     "Elige una o varias facultades:",
-    options=sorted(df["FACULTAD"].unique()),
-    default=[sorted(df["FACULTAD"].unique())[0]],
+    options=facultades_validas,
+    default=facultades_validas,
 )
 
-
-# FILTRO CARRERA
-carreras_filtradas = df[df["FACULTAD"].isin(facultades_seleccionadas)]["CARRERA"].unique()
+# --- Filtro CARRERA (automáticamente todas las relacionadas con las facultades seleccionadas) ---
+carreras_filtradas = df[df["FACULTAD"].isin(facultades_seleccionadas)][
+    "CARRERA"
+].unique()
 carreras_seleccionadas = st.multiselect(
     "Elige una o varias carreras:",
     options=sorted(carreras_filtradas),
-    default=[sorted(carreras_filtradas)[0]]
+    default=sorted(carreras_filtradas),
 )
 
 
 # --- Filtrar DataFrame ---
 df_filt = df[
-    (df["AÑO"].isin(anios_seleccionados)) &
-    (df["FACULTAD"].isin(facultades_seleccionadas)) &
-    (df["CARRERA"].isin(carreras_seleccionadas))
+    (df["AÑO"].isin(anios_seleccionados))
+    & (df["FACULTAD"].isin(facultades_seleccionadas))
+    & (df["CARRERA"].isin(carreras_seleccionadas))
 ].copy()
 
 
