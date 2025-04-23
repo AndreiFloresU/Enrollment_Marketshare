@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.graph_objects as go
 
 # --- Lectura de datos ---
-df = pd.read_excel("./files/baseMarketShare.xlsx")
+df = pd.read_excel("./files/baseMarketShare2.xlsx")
 
 # --- Filtrar para excluir "CUARTO NIVEL" ---
 df = df[df["NIVEL"] != "CUARTO NIVEL"]
@@ -17,17 +17,25 @@ anios_seleccionados = st.multiselect(
 )
 
 # FILTRO FACULTAD
-facultad_seleccionada = st.selectbox("Elige una facultad:", options=sorted(df["FACULTAD"].unique()))
+facultades_seleccionadas = st.multiselect(
+    "Elige una o varias facultades:",
+    options=sorted(df["FACULTAD"].unique()),
+    default=[sorted(df["FACULTAD"].unique())[0]],
+)
+
 
 # FILTRO CARRERA
-carreras_filtradas = df[df["FACULTAD"] == facultad_seleccionada]["CARRERA"].unique()
+carreras_filtradas = df[df["FACULTAD"].isin(facultades_seleccionadas)]["CARRERA"].unique()
 carrera_seleccionada = st.selectbox(
     "Elige una carrera:", options=sorted(carreras_filtradas)
 )
 
+
 # --- Filtrar DataFrame ---
 df_filt = df[
-    (df["AÑO"].isin(anios_seleccionados)) & (df["CARRERA"] == carrera_seleccionada)
+    (df["AÑO"].isin(anios_seleccionados)) &
+    (df["FACULTAD"].isin(facultades_seleccionadas)) &
+    (df["CARRERA"] == carrera_seleccionada)
 ].copy()
 
 if df_filt.empty:
@@ -147,6 +155,8 @@ fig.update_layout(
     margin=dict(t=80, b=40, l=60, r=60),
     hovermode="x unified",
 )
+
+fig.update_xaxes(type="category")
 
 # --- Mostrar en Streamlit ---
 st.plotly_chart(fig, use_container_width=True)

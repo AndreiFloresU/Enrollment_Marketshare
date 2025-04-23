@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide")
 
 # Cargar los datos
-df = pd.read_excel("./files/baseMarketShare.xlsx")
+df = pd.read_excel("./files/baseMarketShare2.xlsx")
 
 # Título de la aplicación
 st.title("MARKETSHARE")
